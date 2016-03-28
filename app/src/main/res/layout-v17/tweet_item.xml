@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:minHeight="50dp"
-        android:layout_marginTop="3dp">
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="6dp">
 
         <ImageView
             android:layout_width="50dp"
@@ -22,51 +23,59 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="10dp">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="Name"
-                    android:id="@+id/tvName"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="2dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/abc_primary_text_material_light" />
-
-                <TextView
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Date"
-                    android:id="@+id/tvDate"
-                    android:layout_marginLeft="20dp"
-                    android:textAlignment="textEnd"
-                    android:singleLine="true"
-                    android:layout_marginTop="2dp" />
+                    android:minHeight="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="Name"
+                        android:id="@+id/tvName"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="2dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/abc_primary_text_material_light" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Date"
+                        android:id="@+id/tvDate"
+                        android:layout_marginLeft="20dp"
+                        android:textAlignment="textEnd"
+                        android:singleLine="true"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:id="@+id/ivPhoto"
+                android:layout_marginRight="60dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="BodyText"
+                android:id="@+id/tvBodyText"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/abc_primary_text_material_light" />
         </LinearLayout>
+
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:id="@+id/ivPhoto"
-        android:layout_marginRight="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="2dp"
-        android:visibility="gone" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="BodyText"
-        android:id="@+id/tvBodyText"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="2dp"
-        android:textAlignment="center"
-        android:textColor="@color/abc_primary_text_material_light" />
 </LinearLayout>

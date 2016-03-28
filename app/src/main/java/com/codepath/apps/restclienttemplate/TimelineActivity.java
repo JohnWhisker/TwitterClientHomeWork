@@ -1,10 +1,21 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.EditText;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -15,7 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class TimelineActivity extends AppCompatActivity {
-
+    private Toolbar toolbartop;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +34,7 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_line);
         tweets = new ArrayList<>();
-
+        toolbartop = (Toolbar) findViewById(R.id.toolbartop);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvTweets);
         aTweets = new TweetArrayAdapter(tweets);
         recyclerView.setAdapter(aTweets);
@@ -35,6 +46,67 @@ public class TimelineActivity extends AppCompatActivity {
 
                 populateTimeLIne(page);
             }
+        });
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
+            int verticalOffset;
+
+            // Determines the scroll UP/DOWN direction
+            boolean scrollingUp;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (scrollingUp) {
+                        if (verticalOffset > toolbartop.getHeight()) {
+                            toolbarAnimateHide();
+                        } else {
+                            toolbarAnimateShow(verticalOffset);
+                        }
+                    } else {
+                        if (toolbartop.getTranslationY() < toolbartop.getHeight() * -0.6 && verticalOffset > toolbartop.getHeight()) {
+                            toolbarAnimateHide();
+                        } else {
+                            toolbarAnimateShow(verticalOffset);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public final void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                verticalOffset += dy;
+                scrollingUp = dy > 0;
+                int toolbarYOffset = (int) (dy - toolbartop.getTranslationY());
+                toolbartop.animate().cancel();
+                if (scrollingUp) {
+                    if (toolbarYOffset < toolbartop.getHeight()) {
+                        if (verticalOffset > toolbartop.getHeight()) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                toolbarSetElevation(toolbartop.getElevation());
+                            }
+                        }
+                        toolbartop.setTranslationY(-toolbarYOffset);
+                    } else {
+                        toolbarSetElevation(0);
+                        toolbartop.setTranslationY(-toolbartop.getHeight());
+                    }
+                } else {
+                    if (toolbarYOffset < 0) {
+                        if (verticalOffset <= 0) {
+                            toolbarSetElevation(0);
+                        }
+                        toolbartop.setTranslationY(0);
+                    } else {
+                        if (verticalOffset > toolbartop.getHeight()) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                toolbarSetElevation(toolbartop.getElevation());
+                            }
+                        }
+                        toolbartop.setTranslationY(-toolbarYOffset);
+                    }
+                }
+            }
+
         });
         client = TwitterApplication.getRestClient();
         populateTimeLIne(1);
@@ -49,6 +121,7 @@ public class TimelineActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 tweets.addAll(Tweet.fromJSONArray(response));
                 aTweets.notifyDataSetChanged();
+                Log.d("DEBUG2", tweets.toString());
             }
 
             @Override
@@ -58,4 +131,70 @@ public class TimelineActivity extends AppCompatActivity {
         },page);
 
     }
+
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void toolbarSetElevation(float elevation) {
+        // setElevation() only works on Lollipop
+
+            toolbartop.setElevation(elevation);
+
+    }
+
+    private void toolbarAnimateShow(final int verticalOffset) {
+        toolbartop.animate()
+                .translationY(0)
+                .setInterpolator(new LinearInterpolator())
+                .setDuration(180)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            toolbarSetElevation(verticalOffset == 0 ? 0 : toolbartop.getElevation());
+                        }
+                    }
+                });
+    }
+
+    private void toolbarAnimateHide() {
+       toolbartop.animate()
+                .translationY(-toolbartop.getHeight())
+                .setInterpolator(new LinearInterpolator())
+                .setDuration(180)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        toolbarSetElevation(0);
+                    }
+                });
+    }
+
+    protected void showInputDialog() {
+
+        // get prompts.xml view
+        LayoutInflater layoutInflater = LayoutInflater.from(TimelineActivity.this);
+        View promptView = layoutInflater.inflate(R.layout.input_status, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TimelineActivity.this);
+        alertDialogBuilder.setView(promptView);
+
+        final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
+        // setup a dialog window
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                       // process here
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create an alert dialog
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
+
 }

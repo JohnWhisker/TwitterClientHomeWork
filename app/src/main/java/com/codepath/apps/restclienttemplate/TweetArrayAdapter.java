@@ -92,6 +92,8 @@ public class TweetArrayAdapter extends
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Tweet tweet = mTweets.get(position);
+        holder.ivPhoto.setImageResource(0);
+        holder.ivPhoto.setVisibility(View.GONE);
         holder.tvName.setText(tweet.getUser().getName());
         String time = "";
         try {

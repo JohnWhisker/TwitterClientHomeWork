@@ -1,12 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.codepath.apps.restclienttemplate.TimeLineAc">
+
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvTweets"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-</RelativeLayout>
+        android:layout_height="559dp"
+        android:paddingTop="?attr/actionBarSize"
+        android:clipToPadding="false"
+        android:layout_alignParentLeft="true"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbartop"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="@color/design_textinput_error_color_dark"
+        android:visibility="visible"
+        android:transitionGroup="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:focusable="true"
+        android:alpha="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar_title"
+            android:text="Home Timeline"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="20dp"
+             />
+    </android.support.v7.widget.Toolbar>
+
+</FrameLayout>
