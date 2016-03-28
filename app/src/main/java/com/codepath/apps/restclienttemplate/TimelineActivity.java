@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -16,25 +15,35 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class TimelineActivity extends AppCompatActivity {
-    private TwitterClient client;
-    private ArrayList<Tweet> tweets;
-    TweetArrayAdapter  aTweets;
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timeline);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_time_line);
         tweets = new ArrayList<>();
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvTweets);
         aTweets = new TweetArrayAdapter(tweets);
         recyclerView.setAdapter(aTweets);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        client = TwitterApplication.getRestClient();
-        populateTimeLIne();
-    }
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
 
-    private void populateTimeLIne() {
+                populateTimeLIne(page);
+            }
+        });
+        client = TwitterApplication.getRestClient();
+        populateTimeLIne(1);
+    }
+    private TwitterClient client;
+    private ArrayList<Tweet> tweets;
+    TweetArrayAdapter  aTweets;
+
+    private void populateTimeLIne(int page) {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -46,8 +55,7 @@ public class TimelineActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
             }
-        });
+        },page);
+
     }
-
-
 }
