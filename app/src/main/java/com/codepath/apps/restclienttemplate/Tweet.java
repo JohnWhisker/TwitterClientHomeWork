@@ -13,10 +13,22 @@ public class Tweet {
     private String body;
     private long uid;
     private User user;
-    private String createAt;
+    private String createAt,mediaUrl,mediaType;
+
+    public String getMediaUrl() {
+        return mediaUrl;
+    }
+
+    public String getMediaType() {
+        return mediaType;
+    }
 
     public String getBody() {
         return body;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public long getUid() {
@@ -27,6 +39,7 @@ public class Tweet {
         return createAt;
     }
 
+
     public static Tweet fromJSON (JSONObject jsonObject){
         Tweet tweet = new Tweet();
         try {
@@ -34,6 +47,11 @@ public class Tweet {
             tweet.uid = jsonObject.getLong("id");
             tweet.createAt = jsonObject.getString("created_at");
             tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+            try{
+                 tweet.mediaUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url");
+                 tweet.mediaType = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("type");
+            }catch (JSONException f){ f.printStackTrace();
+                tweet.mediaUrl = null;tweet.mediaType = null;}
         }catch (JSONException e){
             e.printStackTrace();
         }
