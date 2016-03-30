@@ -4,5 +4,6 @@
     <string name="app_name">Twitter Client</string>
     <string name="login_label">Connect with Twitter</string>
     <string name="title_activity_timeline">Timeline</string>
-
+    <string name="title_activity_fab">Fab</string>
+    <color name="blue">#0066ff</color>
 </resources>

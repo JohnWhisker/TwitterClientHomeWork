@@ -22,5 +22,14 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_timeline" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_posttweet"
+        android:background="@drawable/ripple"
 
+        />
 </android.support.design.widget.CoordinatorLayout>
