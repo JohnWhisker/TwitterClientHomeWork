@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 
 public class TimelineActivity extends AppCompatActivity {
     private Toolbar toolbartop;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +42,23 @@ public class TimelineActivity extends AppCompatActivity {
         recyclerView.setAdapter(aTweets);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+       toolbartop.setOnLongClickListener(new View.OnLongClickListener() {
+           @Override
+           public boolean onLongClick(View v) {
+               Toast.makeText(TimelineActivity.this,"You just long click, son", Toast.LENGTH_SHORT).show();
+               showInputDialog();
+           
+               return true;
+           }
+       });
         recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
+        @Override
             public void onLoadMore(int page, int totalItemsCount) {
 
                 populateTimeLIne(page);
             }
         });
+
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
             int verticalOffset;
 
@@ -71,6 +83,7 @@ public class TimelineActivity extends AppCompatActivity {
                     }
                 }
             }
+
 
             @Override
             public final void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -172,19 +185,17 @@ public class TimelineActivity extends AppCompatActivity {
 
 
     protected void showInputDialog() {
-
         // get prompts.xml view
         LayoutInflater layoutInflater = LayoutInflater.from(TimelineActivity.this);
         View promptView = layoutInflater.inflate(R.layout.input_status, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TimelineActivity.this);
         alertDialogBuilder.setView(promptView);
-
         final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
         // setup a dialog window
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                       // process here
+                       Toast.makeText(TimelineActivity.this,"Tweet is: "+editText.getText().toString(),Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel",
@@ -193,10 +204,10 @@ public class TimelineActivity extends AppCompatActivity {
                                 dialog.cancel();
                             }
                         });
-
         // create an alert dialog
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
+        Toast.makeText(TimelineActivity.this,editText.getText(),Toast.LENGTH_SHORT).show();
     }
 
 }

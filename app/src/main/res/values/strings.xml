@@ -6,4 +6,5 @@
     <string name="title_activity_timeline">Timeline</string>
     <string name="title_activity_fab">Fab</string>
     <color name="blue">#0066ff</color>
+    <string name="title_activity_timelinee">Timelinee</string>
 </resources>
