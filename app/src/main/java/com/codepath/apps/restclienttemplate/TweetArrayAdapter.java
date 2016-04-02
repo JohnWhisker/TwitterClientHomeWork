@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by johnw on 3/27/2016.
@@ -25,15 +28,15 @@ public class TweetArrayAdapter extends
     Context context;
     View tweetView;
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvName,tvDate,tvBodyText;
-        private ImageView ivPhoto,ivProfilePicture;
+        @Bind(R.id.tvName) TextView tvName;
+        @Bind(R.id.tvDate) TextView tvDate;
+        @Bind(R.id.tvBodyText) TextView tvBodyText;
+        @Bind(R.id.ivPhoto) ImageView ivPhoto;
+        @Bind(R.id.ivProfilePicture) ImageView ivProfilePicture;
+
         public ViewHolder(View view) {
             super(view);
-            tvName = (TextView) view.findViewById(R.id.tvName);
-            tvDate = (TextView) view.findViewById(R.id.tvDate);
-            tvBodyText = (TextView) view.findViewById(R.id.tvBodyText);
-            ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
-            ivProfilePicture = (ImageView) view.findViewById(R.id.ivProfilePicture);
+            ButterKnife.bind(this,view);
             view.setOnClickListener(this);
         }
         @Override
@@ -105,13 +108,17 @@ public class TweetArrayAdapter extends
             time = time.substring(1);
         }
        holder.tvDate.setText(time);
-        Picasso.with(context).load(tweet.getUser().getProfileImageUrl()).fit().into(holder.ivProfilePicture);
+        Glide.with(context).
+                 load(tweet.getUser().getProfileImageUrl())
+                .into(holder.ivProfilePicture);
         if(tweet.getMediaUrl()!=null)
         Log.d("DEBUG",tweet.getMediaUrl());
         if (tweet.getMediaUrl()!=null) {
             holder.ivPhoto.setVisibility(View.VISIBLE);
             Log.d("DEBUG","It's photo  url: "+tweet.getMediaUrl());
-            Picasso.with(context).load(tweet.getMediaUrl()).into(holder.ivPhoto);
+            Glide.with(context)
+                    .load(tweet.getMediaUrl())
+                    .into(holder.ivPhoto);
       }
         if(tweet.getMediaUrl()==null){
         holder.tvBodyText.setText(tweet.getBody());}

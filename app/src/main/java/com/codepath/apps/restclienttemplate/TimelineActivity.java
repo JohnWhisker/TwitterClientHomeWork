@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,28 +27,43 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class TimelineActivity extends AppCompatActivity {
-    private Toolbar toolbartop;
-
+    @Bind(R.id.toolbartop) Toolbar toolbartop;
+    @Bind(R.id.rvTweets) RecyclerView recyclerView;
+    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    private boolean clear;
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        ButterKnife.bind(this);
+        clear = false;
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                clear = true;
+                populateTimeLIne(0);
+            }
+        });
+        swipeContainer.setColorSchemeColors(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         tweets = new ArrayList<>();
-        toolbartop = (Toolbar) findViewById(R.id.toolbartop);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvTweets);
         aTweets = new TweetArrayAdapter(tweets);
         recyclerView.setAdapter(aTweets);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-       toolbartop.setOnLongClickListener(new View.OnLongClickListener() {
+        toolbartop.setOnLongClickListener(new View.OnLongClickListener() {
            @Override
            public boolean onLongClick(View v) {
                Toast.makeText(TimelineActivity.this,"You just long click, son", Toast.LENGTH_SHORT).show();
                showInputDialog();
-           
+
                return true;
            }
        });
@@ -132,9 +148,17 @@ public class TimelineActivity extends AppCompatActivity {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+               if(clear){
+                   tweets.clear();
+                   aTweets.notifyDataSetChanged();
+               }
                 tweets.addAll(Tweet.fromJSONArray(response));
                 aTweets.notifyDataSetChanged();
                 Log.d("DEBUG2", tweets.toString());
+                if(clear){
+                    clear = false;
+                    swipeContainer.setRefreshing(clear);
+                }
             }
 
             @Override
