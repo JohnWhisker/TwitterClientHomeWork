@@ -11,7 +11,7 @@
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="622dp"
-        android:name="com.codepath.apps.restclienttemplate.fragments.TweetsListFragment"
+        android:name="com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment"
         android:id="@+id/fragment_timeline"
         android:layout_gravity="left|top"
         tools:layout="@layout/fragment_tweet_list" />

@@ -9,29 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.Tweet;
-import com.codepath.apps.restclienttemplate.TweetArrayAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TweetsListFragment extends Fragment {
-    private ArrayList<Tweet> tweets;
-    private TweetArrayAdapter aTweets;
+View view;
 
-    public ArrayList<Tweet> getTweets() {
-        return tweets;
-    }
-
-    public TweetArrayAdapter getaTweets() {
-        return aTweets;
+    @Nullable
+    @Override
+    public View getView() {
+        return view;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tweet_list,container,false);
-        tweets = new ArrayList<>();
-        aTweets = new TweetArrayAdapter(tweets);
+        view =v;
         return v;
     }
 
@@ -40,13 +31,6 @@ public class TweetsListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-    }
-    public void tclear(){
-        tweets.clear();
-        aTweets.notifyDataSetChanged();
-    }
-    public void addAll(List<Tweet> tweet){
-        tweets.addAll(tweet);
     }
 
 

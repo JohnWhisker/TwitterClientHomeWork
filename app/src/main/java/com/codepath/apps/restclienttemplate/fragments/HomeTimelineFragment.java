@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.codepath.apps.restclienttemplate.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.Tweet;
+import com.codepath.apps.restclienttemplate.TweetArrayAdapter;
 import com.codepath.apps.restclienttemplate.TwitterApplication;
 import com.codepath.apps.restclienttemplate.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -29,6 +30,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,13 +42,18 @@ import butterknife.ButterKnife;
 public class HomeTimelineFragment extends TweetsListFragment {
     private TwitterClient client;
     private boolean clear;
+    private ArrayList<Tweet> tweets;
+    private TweetArrayAdapter aTweets;
     @Bind(R.id.toolbartop) Toolbar toolbartop;
     @Bind(R.id.rvTweets) RecyclerView recyclerView;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
-    @Override
+
+
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(getActivity());
+        tweets = new ArrayList<>();
+        aTweets = new TweetArrayAdapter(tweets);
+        ButterKnife.bind(this,getView());
         clear = false;
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -134,7 +142,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        recyclerView.setAdapter(getaTweets());
+        recyclerView.setAdapter(aTweets);
         recyclerView.setLayoutManager(linearLayoutManager);
         client = TwitterApplication.getRestClient();
         populateTimeLIne(1);
@@ -145,10 +153,11 @@ public class HomeTimelineFragment extends TweetsListFragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 if(clear){
-                    tclear();
+                    tweets.clear();
+                    aTweets.notifyDataSetChanged();
                 }
-               addAll(Tweet.fromJSONArray(response));
-
+               tweets.addAll(Tweet.fromJSONArray(response));
+               aTweets.notifyDataSetChanged();
                 if(clear){
                     clear = false;
                     swipeContainer.setRefreshing(clear);
