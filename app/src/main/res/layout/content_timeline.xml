@@ -1,48 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.codepath.apps.restclienttemplate.TimelineActivity"
     tools:showIn="@layout/activity_timeline">
 
-    <fragment
-        android:layout_width="wrap_content"
-        android:layout_height="622dp"
-        android:name="com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment"
-        android:id="@+id/fragment_timeline"
-        android:layout_gravity="left|top"
-        tools:layout="@layout/fragment_tweet_list" />
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbartop"
-        android:minHeight="?attr/actionBarSize"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
-        android:background="@color/design_textinput_error_color_dark"
-        android:visibility="visible"
-        android:transitionGroup="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:focusable="true"
-        android:alpha="1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbar_title"
-            android:text="Home Timeline"
-            android:textColor="@android:color/white"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            />
-    </android.support.v7.widget.Toolbar>
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+         />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         />
 
 
-</FrameLayout>
+    <!--<fragment-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:name="com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment"-->
+    <!--android:id="@+id/fragment"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--tools:layout="@layout/fragment_tweet_list"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignParentEnd="true" />-->
+</LinearLayout>

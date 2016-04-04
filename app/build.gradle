@@ -29,17 +29,18 @@ dependencies {
     // Android Async Http for sending async network requests
     // ActiveAndroid for simple persistence with an ORM
     //Core lib
+    //Images lib
+    //Connection lib
+
+
     compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:support-v4:23.1.1'
-    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:design:23.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
-    //Images lib
+    compile 'jp.wasabeef:recyclerview-animators:2.2.0'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.bumptech.glide:glide:3.5.2'
-    compile 'com.android.support:support-v4:23.0.0'
-    //Connection lib
     compile 'com.loopj.android:android-async-http:1.4.8'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
-
 }

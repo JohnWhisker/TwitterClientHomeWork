@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.codepath.apps.restclienttemplate.R;
 
 public class TweetsListFragment extends Fragment {
-View view;
+    View view;
 
     @Nullable
     @Override
@@ -21,8 +21,8 @@ View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_tweet_list,container,false);
-        view =v;
+        View v = inflater.inflate(R.layout.fragment_tweet_list, container, false);
+        view = v;
         return v;
     }
 

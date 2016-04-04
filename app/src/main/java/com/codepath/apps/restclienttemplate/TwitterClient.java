@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.scribe.builder.api.Api;
@@ -22,31 +23,41 @@ import org.scribe.builder.api.TwitterApi;
  * 
  */
 public class TwitterClient extends OAuthBaseClient {
-	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
-	public static final String REST_URL = "https://api.twitter.com/1.1"; // Change this, base API URL
-	public static final String REST_CONSUMER_KEY = "JjokLouA2Lg2DhtCkK4Yhema2";       // Change this
-	public static final String REST_CONSUMER_SECRET = "DlHmQfyzMqMx1UMGCPJOVNKxbNq5nVB7ezOfZIszYonJfQZG7f"; // Change this
-	public static final String REST_CALLBACK_URL = "oauth://TweetAppClient"; // Change this (here and in manifest)
+    public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
+    public static final String REST_URL = "https://api.twitter.com/1.1"; // Change this, base API URL
+    public static final String REST_CONSUMER_KEY = "JjokLouA2Lg2DhtCkK4Yhema2";       // Change this
+    public static final String REST_CONSUMER_SECRET = "DlHmQfyzMqMx1UMGCPJOVNKxbNq5nVB7ezOfZIszYonJfQZG7f"; // Change this
+    public static final String REST_CALLBACK_URL = "oauth://TweetAppClient"; // Change this (here and in manifest)
 
-	public TwitterClient(Context context) {
-		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
-	}
+    public TwitterClient(Context context) {
+        super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
+    }
 
-	public void getHomeTimeline(AsyncHttpResponseHandler hanlder,int page){
-		String apiUrl = getApiUrl("statuses/home_timeline.json");
-		client.get(apiUrl, null, hanlder);
-		RequestParams params = new RequestParams();
-		params.put("count",25);
-		params.put("page",page);
-		getClient().get(apiUrl,params,hanlder);
+    public void getHomeTimeline(AsyncHttpResponseHandler hanlder, int page) {
+        String apiUrl = getApiUrl("statuses/home_timeline.json");
+        client.get(apiUrl, null, hanlder);
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("page", page);
+        getClient().get(apiUrl, params, hanlder);
 
-	}
-	// CHANGE THIS
-	// DEFINE METHODS for different API endpoints here
+    }
+
+    public void getMentionTimeline(JsonHttpResponseHandler hanlder, int page) {
+        String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+        client.get(apiUrl, null, hanlder);
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("page", page);
+        getClient().get(apiUrl, params, hanlder);
+
+    }
+    // CHANGE THIS
+    // DEFINE METHODS for different API endpoints here
 
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
-	 * 	  i.e getApiUrl("statuses/home_timeline.json");
+     * 	  i.e getApiUrl("statuses/home_timeline.json");
 	 * 2. Define the parameters to pass to the request (query or body)
 	 *    i.e RequestParams params = new RequestParams("foo", "bar");
 	 * 3. Define the request method and make a call to the client
