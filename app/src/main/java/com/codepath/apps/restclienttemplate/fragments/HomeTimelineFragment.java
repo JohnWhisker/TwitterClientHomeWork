@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -44,12 +43,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
     @Bind(R.id.rvTweets) RecyclerView recyclerView;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_tweet_list,container,false);
 
-        return v;
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -162,8 +156,9 @@ public class HomeTimelineFragment extends TweetsListFragment {
                     tweets.clear();
                     aTweets.notifyDataSetChanged();
                 }
-               tweets.addAll(Tweet.fromJSONArray(response));
-               aTweets.notifyDataSetChanged();
+                tweets.addAll(Tweet.fromJSONArray(response));
+                aTweets.setList(tweets);
+                aTweets.notifyDataSetChanged();
                 if(clear){
                     clear = false;
                     swipeContainer.setRefreshing(clear);

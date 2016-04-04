@@ -48,6 +48,8 @@ public class TweetArrayAdapter extends
     private List<Tweet> mTweets;
     public TweetArrayAdapter(List<Tweet> tweets){mTweets = tweets;}
 
+    public void setList(List<Tweet> tweets){this.mTweets = tweets;}
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();

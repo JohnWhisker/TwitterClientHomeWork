@@ -10,28 +10,18 @@ import android.view.ViewGroup;
 
 import com.codepath.apps.restclienttemplate.R;
 
+import butterknife.ButterKnife;
+
 public class TweetsListFragment extends Fragment {
-    View view;
-
-    @Nullable
-    @Override
-    public View getView() {
-        return view;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tweet_list, container, false);
-        view = v;
+        ButterKnife.bind(this,v);
         return v;
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
-
 
 }
