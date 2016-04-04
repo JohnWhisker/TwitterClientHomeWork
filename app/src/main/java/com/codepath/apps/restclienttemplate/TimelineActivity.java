@@ -7,6 +7,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment;
 import com.codepath.apps.restclienttemplate.fragments.MentionTimelineFragment;
@@ -21,13 +24,25 @@ public class TimelineActivity extends AppCompatActivity {
     ViewPager viewPager;
 //    @Bind(R.id.tabs)
 //    PagerSlidingTabStrip pagerSlidingTabStrip;
-    TabLayout tablayout;
-
+    @Bind(R.id.tabLayout) TabLayout tablayout;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.toolbar_title)
+    TextView mTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Twitter");
+        getSupportActionBar().setLogo(getResources().getDrawable(R.drawable.ic_logo));
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        toolbar.setTitleTextColor(getResources().getColor(R.color.blue));
+
 
        // viewPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
       //  pagerSlidingTabStrip.setViewPager(viewPager);
@@ -38,12 +53,14 @@ public class TimelineActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
 
-        tablayout = (TabLayout) findViewById(R.id.tabs);
+      //  tablayout = (TabLayout) findViewById(R.id.tabs);
         tablayout.setupWithViewPager(viewPager);
+    }
 
-
-
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.hometimeline_menu,menu);
+        return true;
     }
 
     public class TweetsPagerAdapter extends FragmentPagerAdapter {
@@ -86,3 +103,5 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
 }
+
+
