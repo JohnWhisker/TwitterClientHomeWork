@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="140"
+        app:counterTextAppearance="@style/counterText"
+        app:counterOverflowTextAppearance="@style/counterOverride"
+        android:textColorHint="@color/blue"
+        >
+        <EditText
+            android:id="@+id/posttxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="16"
+            android:maxLines="16"
+            android:singleLine="false"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:maxLength="140"
+            android:textColorHint="@color/blue"
+            android:hint="         What do you think..." />
+    </android.support.design.widget.TextInputLayout>
+
+
+</LinearLayout>

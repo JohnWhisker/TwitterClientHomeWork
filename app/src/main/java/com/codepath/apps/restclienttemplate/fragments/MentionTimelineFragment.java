@@ -8,10 +8,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.Tweet;
-import com.codepath.apps.restclienttemplate.TweetArrayAdapter;
-import com.codepath.apps.restclienttemplate.TwitterApplication;
-import com.codepath.apps.restclienttemplate.TwitterClient;
+import com.codepath.apps.restclienttemplate.Others.Tweet;
+import com.codepath.apps.restclienttemplate.Adapter.TweetArrayAdapter;
+import com.codepath.apps.restclienttemplate.Others.TwitterApplication;
+import com.codepath.apps.restclienttemplate.Others.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;

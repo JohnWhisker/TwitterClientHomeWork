@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.Others;
 
 import android.content.Context;
 
@@ -52,6 +52,13 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, params, hanlder);
 
     }
+    public void postTweet(String body, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/update.json");
+        RequestParams params = new RequestParams();
+        params.put("status", body);
+        getClient().post(apiUrl, params, handler);
+    }
+
     // CHANGE THIS
     // DEFINE METHODS for different API endpoints here
 

@@ -13,12 +13,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.codepath.apps.restclienttemplate.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.restclienttemplate.Listeners.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.Tweet;
-import com.codepath.apps.restclienttemplate.TweetArrayAdapter;
-import com.codepath.apps.restclienttemplate.TwitterApplication;
-import com.codepath.apps.restclienttemplate.TwitterClient;
+import com.codepath.apps.restclienttemplate.Others.Tweet;
+import com.codepath.apps.restclienttemplate.Adapter.TweetArrayAdapter;
+import com.codepath.apps.restclienttemplate.Others.TwitterApplication;
+import com.codepath.apps.restclienttemplate.Others.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -33,21 +33,21 @@ import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 
 /**
  * Created by johnw on 4/3/2016.
- */
+ */// cái fragment dung de hien timeline
 public class HomeTimelineFragment extends TweetsListFragment {
+    public static ArrayList<Tweet> tweets; // cho 2 cai nay thanh static
+    public static TweetArrayAdapter aTweets;
+    // @Bind(R.id.toolbartop) Toolbar toolbartop;
+    @Bind(R.id.rvTweets)
+    RecyclerView recyclerView;
+    @Bind(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
     private TwitterClient client;
     private boolean clear;
-    private ArrayList<Tweet> tweets;
-    private TweetArrayAdapter aTweets;
-   // @Bind(R.id.toolbartop) Toolbar toolbartop;
-    @Bind(R.id.rvTweets) RecyclerView recyclerView;
-    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
-
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         tweets = new ArrayList<>();
         aTweets = new TweetArrayAdapter(tweets);
         clear = false;
@@ -147,30 +147,33 @@ public class HomeTimelineFragment extends TweetsListFragment {
         client = TwitterApplication.getRestClient();
         populateTimeLIne(1);
     }
+
     private void populateTimeLIne(int page) {
 
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                if(clear){
+                if (clear) {
                     tweets.clear();
                     aTweets.notifyDataSetChanged();
                 }
                 tweets.addAll(Tweet.fromJSONArray(response));
                 aTweets.setList(tweets);
                 aTweets.notifyDataSetChanged();
-                if(clear){
+                if (clear) {
                     clear = false;
                     swipeContainer.setRefreshing(clear);
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
             }
-        },page);
+        }, page);
 
     }
+
     protected void showInputDialog() {
         // get prompts.xml view
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
@@ -182,7 +185,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(getActivity(),"Tweet is: "+editText.getText().toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Tweet is: " + editText.getText().toString(), Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel",
@@ -194,7 +197,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
         // create an alert dialog
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
-        Toast.makeText(getActivity(),editText.getText(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), editText.getText(), Toast.LENGTH_SHORT).show();
     }
 
 //    @TargetApi(Build.VERSION_CODES.LOLLIPOP)

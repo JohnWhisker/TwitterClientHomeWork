@@ -7,6 +7,7 @@
         android:id="@+id/compose"
         android:icon="@drawable/ic_posttweet"
         app:showAsAction="always|withText"
+        android:onClick="doThis"
         />
 
 </menu>
