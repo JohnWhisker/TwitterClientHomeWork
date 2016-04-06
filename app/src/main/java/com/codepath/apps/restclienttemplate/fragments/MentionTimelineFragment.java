@@ -32,6 +32,7 @@ public class MentionTimelineFragment extends TweetsListFragment {
     private ArrayList<Tweet> tweets;
     private TweetArrayAdapter aTweets;
     private boolean clear;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

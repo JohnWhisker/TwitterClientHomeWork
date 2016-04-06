@@ -9,11 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
-import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.Others.TwitterApplication;
+import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment;
 import com.codepath.apps.restclienttemplate.fragments.MentionTimelineFragment;
 import com.codepath.apps.restclienttemplate.fragments.PostTweet;
@@ -64,7 +64,7 @@ public class TimelineActivity extends AppCompatActivity {
         tablayout.setupWithViewPager(viewPager);
     }
 
-    public void doThis(MenuItem menuItem) {
+    public void doThis(View view) {
         PostDialog.show(getFragmentManager(), "fragment_dialog");
 
     }

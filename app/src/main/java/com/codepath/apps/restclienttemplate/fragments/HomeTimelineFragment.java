@@ -68,7 +68,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
                 populateTimeLIne(page);
             }
         });
-
+// onCreat , onViewCreated
 //        toolbartop.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {

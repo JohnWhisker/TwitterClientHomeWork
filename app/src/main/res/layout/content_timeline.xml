@@ -51,7 +51,18 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
          />
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:background="@color/blue"
+        android:backgroundTint="@color/blue"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_posttweet"
+        app:borderWidth="0dp"
+        app:layout_behavior="com.codepath.apps.restclienttemplate.Others.ScrollingFABBehavior"
+        android:onClick="doThis"/>
 
     <!--<fragment-->
     <!--android:layout_width="wrap_content"-->
