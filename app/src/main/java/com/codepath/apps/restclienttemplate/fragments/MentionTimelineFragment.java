@@ -1,7 +1,9 @@
 package com.codepath.apps.restclienttemplate.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,6 +30,8 @@ import butterknife.Bind;
 public class MentionTimelineFragment extends TweetsListFragment {
     @Bind(R.id.rvTweets)
     RecyclerView recyclerView;
+    @Bind(R.id.swipeContainer)
+    SwipeRefreshLayout swipeRefreshLayout;
     private TwitterClient client;
     private ArrayList<Tweet> tweets;
     private TweetArrayAdapter aTweets;
@@ -41,6 +45,23 @@ public class MentionTimelineFragment extends TweetsListFragment {
         client = TwitterApplication.getRestClient();
         populateTimeLIne(1);
         super.onViewCreated(view, savedInstanceState);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                        clear = true;
+                        populateTimeLIne(0);
+                    }
+                }, 3000);
+            }
+        });
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     @Override
@@ -63,7 +84,7 @@ public class MentionTimelineFragment extends TweetsListFragment {
                 aTweets.notifyDataSetChanged();
                 if (clear) {
                     clear = false;
-                    //   swipeContainer.setRefreshing(clear);
+                    swipeRefreshLayout.setRefreshing(clear);
                 }
             }
 

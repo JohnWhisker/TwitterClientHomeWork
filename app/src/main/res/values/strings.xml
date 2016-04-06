@@ -5,6 +5,7 @@
     <string name="login_label">Connect with Twitter</string>
     <string name="title_activity_timeline">Timeline</string>
     <string name="title_activity_fab">Fab</string>
+
     <color name="blue">#4099ff</color>
     <string name="title_activity_timelinee">Timelinee</string>
 

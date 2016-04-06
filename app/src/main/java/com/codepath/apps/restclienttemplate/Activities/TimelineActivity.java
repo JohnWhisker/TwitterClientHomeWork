@@ -26,8 +26,6 @@ import butterknife.ButterKnife;
 public class TimelineActivity extends AppCompatActivity {
     @Bind(R.id.viewpager)
     ViewPager viewPager;
-    //    @Bind(R.id.tabs)
-//    PagerSlidingTabStrip pagerSlidingTabStrip;
     @Bind(R.id.tabLayout)
     TabLayout tablayout;
     @Bind(R.id.toolbar)
@@ -47,20 +45,13 @@ public class TimelineActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         toolbar.setTitleTextColor(getResources().getColor(R.color.blue));
-
-
-        // viewPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
-        //  pagerSlidingTabStrip.setViewPager(viewPager);
         TweetsPagerAdapter adapter = new TweetsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new HomeTimelineFragment());//ok no chay roi do,em thu di,cai nay la loi cua em,con fragment thi no hien roi do
+        adapter.addFragment(new HomeTimelineFragment());
         adapter.addFragment(new MentionTimelineFragment());
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
         PostDialog = new PostTweet(TwitterApplication.getRestClient());
-
-        //  tablayout = (TabLayout) findViewById(R.id.tabs);
         tablayout.setupWithViewPager(viewPager);
     }
 
@@ -85,21 +76,12 @@ public class TimelineActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            /*switch (position) {
-                case 0:
-                    return new HomeTimelineFragment();
-                case 1:
-                    return new MentionTimelineFragment(); moi lan em chuyen tab,no lai tao framgnet moi,ma cai fragment nay la fragment list =>no se goi 1 day fragment voi recyclerview moi
-            }
-            return null;*/
             return listFragment.get(position);
         }
 
         public void addFragment(Fragment fragment) {
             if (!listFragment.contains(fragment))
                 listFragment.add(fragment);
-
-
         }
 
         @Override

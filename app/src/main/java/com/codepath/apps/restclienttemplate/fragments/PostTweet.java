@@ -11,11 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-import com.codepath.apps.restclienttemplate.Interface.PostTweetInterface;
-import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.Others.Tweet;
 import com.codepath.apps.restclienttemplate.Adapter.TweetArrayAdapter;
+import com.codepath.apps.restclienttemplate.Others.Tweet;
 import com.codepath.apps.restclienttemplate.Others.TwitterClient;
+import com.codepath.apps.restclienttemplate.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -32,7 +31,6 @@ public class PostTweet extends DialogFragment {
     TweetArrayAdapter adapter;
     String body;
     private TwitterClient client;
-    private PostTweetInterface dialogFragment;
     private EditText etComposeTweet;
 
     @SuppressLint("ValidFragment")
@@ -57,12 +55,9 @@ public class PostTweet extends DialogFragment {
                         client.postTweet(body, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
-
                                 Tweet myNewTweet = Tweet.fromJSON(json);
-                                HomeTimelineFragment.tweets.add(0, myNewTweet); // r qua day gọi nv là xong
+                                HomeTimelineFragment.tweets.add(0, myNewTweet);
                                 HomeTimelineFragment.aTweets.notifyDataSetChanged();
-//                                tweets.add(0,myNewTweet); Nghiên cứu đi, t đi ăn =))) đói vl
-//                                adapter.notifyItemInserted(0);
                             }
 
                             @Override

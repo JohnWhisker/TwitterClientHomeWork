@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,27 +20,26 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/white"
             app:layout_scrollFlags="scroll|enterAlways">
+
             <TextView
                 android:id="@+id/toolbar_title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Twitter"
-                android:textColor="@color/blue"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_gravity="center"
-                />
+                android:text="Twitter"
+                android:textColor="@color/blue" />
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
-            android:background="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextColor="@android:color/black"
-            app:tabSelectedTextColor="@color/blue"
+            android:background="@android:color/white"
             app:tabIndicatorColor="@color/blue"
             app:tabIndicatorHeight="6dp"
-            />
+            app:tabSelectedTextColor="@color/blue"
+            app:tabTextColor="@android:color/black" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -49,30 +47,20 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-         />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
         android:background="@color/blue"
         android:backgroundTint="@color/blue"
-        android:layout_margin="@dimen/fab_margin"
+        android:onClick="doThis"
         android:src="@drawable/ic_posttweet"
         app:borderWidth="0dp"
-        app:layout_behavior="com.codepath.apps.restclienttemplate.Others.ScrollingFABBehavior"
-        android:onClick="doThis"/>
+        app:layout_behavior="com.codepath.apps.restclienttemplate.Others.ScrollingFABBehavior" />
 
-    <!--<fragment-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:name="com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment"-->
-    <!--android:id="@+id/fragment"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--tools:layout="@layout/fragment_tweet_list"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_alignParentEnd="true" />-->
-</android.support.design.widget.CoordinatorLayout >
+
+</android.support.design.widget.CoordinatorLayout>
